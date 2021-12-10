@@ -8,15 +8,22 @@ namespace SalesWebMvc.Models
     public class Seller
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Error: The field {0} is required!")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "Error: The Name size in the Field {0} should be between {2} and {1} characters")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Error: The field {0} is required!")]
+        [EmailAddress(ErrorMessage = "Enter a valid email")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Error: The field {0} is required!")]
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime BirthDate { get; set; }
+        [Required(ErrorMessage = "Error: The field {0} is required!")]
         [Display(Name = "Base Salary")]
         [DisplayFormat(DataFormatString = "£ {0:0,0.00}")]
+        [Range(100.00, 50000.00, ErrorMessage = "{0} must be from £ {1:0,0.00} to £ {2:0,0.00}")]
         public double BaseSalary { get; set; }
         public Department Department { get; set; }
         public int DepartmentId {get; set; }
