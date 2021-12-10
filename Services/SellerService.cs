@@ -36,9 +36,16 @@ namespace SalesWebMvc.Services
 
         public async Task RemoveAsync(int id)
         {
-            var obj = await Context.Seller.FindAsync(id);
-            Context.Seller.Remove(obj);
-            await Context.SaveChangesAsync();
+            try
+            {
+                var obj = await Context.Seller.FindAsync(id);
+                Context.Seller.Remove(obj);
+                await Context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                throw new IntegrityException("Unable to process this operation! This seller has sales linked to its user, please check.");                
+            }
         }
 
         public async Task UpdateAsync(Seller obj)
